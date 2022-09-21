@@ -28,8 +28,9 @@ fun MonthHeaderView(
     yearsInterval: Pair<Long, Long>,
     monthState: MonthState,
     todayColor: Color,
+    dropDownMenuTextColor: Color,
     monthHeaderTextColor: Color,
-    monthInteractor: MonthInteractor
+    monthInteractor: MonthInteractor,
 ) {
     val currentMonth = monthState.currentMonth.month.toString().capitalized()
     val currentYear = monthState.currentMonth.year
@@ -57,7 +58,7 @@ fun MonthHeaderView(
                             monthInteractor.monthChanged(monthState.currentMonth)
                             isYearDropDownShown = false
                         }) {
-                            Text(text = it.toString())
+                            Text(text = it.toString(), color = dropDownMenuTextColor)
                         }
                     }
                 }
@@ -86,7 +87,7 @@ fun MonthHeaderView(
                             monthInteractor.monthChanged(monthState.currentMonth)
                             isMonthDropDownShown = false
                         }) {
-                            Text(text = it.name.capitalized())
+                            Text(text = it.name.capitalized(), color = dropDownMenuTextColor)
                         }
                     }
                 }

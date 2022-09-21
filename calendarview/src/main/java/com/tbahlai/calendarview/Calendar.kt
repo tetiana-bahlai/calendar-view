@@ -33,19 +33,29 @@ fun Calendar(
     yearsInterval: Pair<Long, Long> = Pair(1, 1),
     dots: Color = Color.Black,
     todayColor: Color = Color.LightGray,
+    dropDownMenuTextColor: Color = Color.Black,
     borderColor: Color = Color.LightGray,
     currentMonthDaysTextColor: Color = Color.Black,
     otherMonthDaysTextColor: Color = Color.LightGray,
     dayOfWeekTextColor: Color = Color.Black,
     monthHeaderTextColor: Color = Color.Black,
     monthHeader: @Composable () -> Unit = {
-        MonthHeaderView(yearsInterval, calendarState.monthState, todayColor, monthHeaderTextColor, monthInteractor)
-    }
+        MonthHeaderView(
+            yearsInterval = yearsInterval,
+            monthState = calendarState.monthState,
+            todayColor = todayColor,
+            dropDownMenuTextColor = dropDownMenuTextColor,
+            monthHeaderTextColor = monthHeaderTextColor,
+            monthInteractor = monthInteractor
+        )
+    },
 ) {
     val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
     val daysOfWeek = remember(firstDayOfWeek) { DayOfWeek.values().toList() }
 
-    Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .verticalScroll(rememberScrollState())) {
         monthHeader()
 
         MonthPager(
