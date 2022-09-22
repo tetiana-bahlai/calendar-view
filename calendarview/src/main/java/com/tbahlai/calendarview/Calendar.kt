@@ -18,7 +18,7 @@ import com.tbahlai.calendarview.month.state.MonthState
 import com.tbahlai.calendarview.uimodels.CalendarMode
 import com.tbahlai.calendarview.uimodels.UiCalendarInfo
 import com.tbahlai.calendarview.uimodels.UiEvent
-import com.tbahlai.calendarview.week.WeekInteractor
+import com.tbahlai.calendarview.week.EventInteractor
 import java.time.DayOfWeek
 import java.time.YearMonth
 import java.time.temporal.WeekFields
@@ -28,7 +28,7 @@ import java.util.*
 fun Calendar(
     events: List<UiEvent>,
     calendarState: CalendarState = rememberCalendarState(),
-    weekInteractor: WeekInteractor,
+    eventInteractor: EventInteractor,
     monthInteractor: MonthInteractor,
     yearsInterval: Pair<Long, Long> = Pair(1, 1),
     dots: Color = Color.Black,
@@ -62,7 +62,7 @@ fun Calendar(
             events = events,
             daysOfWeek = daysOfWeek,
             monthState = calendarState.monthState,
-            weekInteractor = weekInteractor,
+            eventInteractor = eventInteractor,
             monthInteractor = monthInteractor,
             calendarState = calendarState,
             dotsColor = dots,
