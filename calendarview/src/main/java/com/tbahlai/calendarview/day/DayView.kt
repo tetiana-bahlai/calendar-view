@@ -56,7 +56,7 @@ fun DayView(
             ) {
                 val textColor = when {
                     day.isFromCurrentMonth -> currentMonthDaysTextColor
-                    else -> otherMonthDaysTextColor
+                    else -> otherMonthDaysTextColor.copy(alpha = 0.3f)
                 }
 
                 Text(
