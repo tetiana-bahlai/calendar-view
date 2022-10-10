@@ -10,7 +10,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.tbahlai.calendarview.month.MonthHeaderView
-import com.tbahlai.calendarview.month.MonthInteractor
 import com.tbahlai.calendarview.month.MonthPager
 import com.tbahlai.calendarview.month.state.CalendarInfoState
 import com.tbahlai.calendarview.month.state.CalendarState
@@ -18,7 +17,6 @@ import com.tbahlai.calendarview.month.state.MonthState
 import com.tbahlai.calendarview.uimodels.CalendarMode
 import com.tbahlai.calendarview.uimodels.UiCalendarInfo
 import com.tbahlai.calendarview.uimodels.UiEvent
-import com.tbahlai.calendarview.week.EventInteractor
 import java.time.DayOfWeek
 import java.time.YearMonth
 import java.time.temporal.WeekFields
@@ -28,15 +26,15 @@ import java.util.*
 fun Calendar(
     events: List<UiEvent>,
     calendarState: CalendarState = rememberCalendarState(),
-    eventInteractor: EventInteractor,
-    monthInteractor: MonthInteractor,
+    eventClicked: (Long) -> Unit,
+    monthClicked: (YearMonth) -> Unit,
     yearsInterval: Pair<Long, Long> = Pair(1, 1),
     dots: Color = Color.Black,
     todayColor: Color = Color.LightGray,
     dropDownMenuTextColor: Color = Color.Black,
     borderColor: Color = Color.LightGray,
     currentMonthDaysTextColor: Color = Color.Black,
-    otherMonthDaysTextColor: Color = Color.LightGray,
+    otherMonthDaysTextColor: Color = Color.DarkGray,
     dayOfWeekTextColor: Color = Color.Black,
     monthHeaderTextColor: Color = Color.Black,
     monthHeader: @Composable () -> Unit = {
@@ -46,24 +44,22 @@ fun Calendar(
             todayColor = todayColor,
             dropDownMenuTextColor = dropDownMenuTextColor,
             monthHeaderTextColor = monthHeaderTextColor,
-            monthInteractor = monthInteractor
+            monthClicked = monthClicked
         )
     },
 ) {
     val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
     val daysOfWeek = remember(firstDayOfWeek) { DayOfWeek.values().toList() }
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .verticalScroll(rememberScrollState())) {
+    Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
         monthHeader()
 
         MonthPager(
             events = events,
             daysOfWeek = daysOfWeek,
             monthState = calendarState.monthState,
-            eventInteractor = eventInteractor,
-            monthInteractor = monthInteractor,
+            eventClicked = eventClicked,
+            monthClicked = monthClicked,
             calendarState = calendarState,
             dotsColor = dots,
             todayColor = todayColor,

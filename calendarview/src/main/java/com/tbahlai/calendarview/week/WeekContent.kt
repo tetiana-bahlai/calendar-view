@@ -25,7 +25,7 @@ fun WeekContent(
     calendarState: CalendarState,
     dayAspectRatio: Float,
     countEvents: Int,
-    eventInteractor: EventInteractor,
+    eventClicked: (Long) -> Unit,
     week: UiWeek,
     dotsColor: Color,
     todayColor: Color,
@@ -75,7 +75,7 @@ fun WeekContent(
                             end = 4.dp
                         )
                         .width((weekEvent.countDays.toInt() * widthOneDay).dp - 4.dp)
-                        .clickable { eventInteractor.onClick(weekEvent.event.id) }
+                        .clickable { eventClicked(weekEvent.event.id) }
                         .background(weekEvent.event.color, RoundedCornerShape(4.dp))
                         .padding(start = 4.dp, end = 4.dp, top = 1.dp, bottom = 1.dp),
                     text = weekEvent.event.name,

@@ -30,7 +30,7 @@ fun MonthHeaderView(
     todayColor: Color,
     dropDownMenuTextColor: Color,
     monthHeaderTextColor: Color,
-    monthInteractor: MonthInteractor,
+    monthClicked: (YearMonth) -> Unit,
 ) {
     val currentMonth = monthState.currentMonth.month.toString().capitalized()
     val currentYear = monthState.currentMonth.year
@@ -55,7 +55,7 @@ fun MonthHeaderView(
                     listOfYears.forEach {
                         DropdownMenuItem(onClick = {
                             monthState.currentMonth = YearMonth.of(it.value, monthState.currentMonth.month)
-                            monthInteractor.monthChanged(monthState.currentMonth)
+                            monthClicked(monthState.currentMonth)
                             isYearDropDownShown = false
                         }) {
                             Text(text = it.toString(), color = dropDownMenuTextColor)
@@ -84,7 +84,7 @@ fun MonthHeaderView(
                     listOfMonth.forEach {
                         DropdownMenuItem(onClick = {
                             monthState.currentMonth = YearMonth.of(currentYear, it)
-                            monthInteractor.monthChanged(monthState.currentMonth)
+                            monthClicked(monthState.currentMonth)
                             isMonthDropDownShown = false
                         }) {
                             Text(text = it.name.capitalized(), color = dropDownMenuTextColor)
@@ -104,7 +104,7 @@ fun MonthHeaderView(
                     .padding(start = 6.dp, end = 6.dp, top = 4.dp, bottom = 4.dp)
                     .clickable {
                         monthState.currentMonth = YearMonth.now()
-                        monthInteractor.monthChanged(monthState.currentMonth)
+                        monthClicked(monthState.currentMonth)
                     }
             ) {
                 Text(text = LocalDate.now().dayOfMonth.toString(), fontSize = 16.sp)

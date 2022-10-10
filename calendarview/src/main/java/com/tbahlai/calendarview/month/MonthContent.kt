@@ -15,7 +15,6 @@ import com.tbahlai.calendarview.month.state.MonthPagerState
 import com.tbahlai.calendarview.month.state.MonthState
 import com.tbahlai.calendarview.uimodels.UiEvent
 import com.tbahlai.calendarview.utils.*
-import com.tbahlai.calendarview.week.EventInteractor
 import com.tbahlai.calendarview.week.WeekContent
 import com.tbahlai.calendarview.week.WeekHeaderView
 import com.tbahlai.calendarview.week.getWeeks
@@ -28,8 +27,8 @@ fun MonthPager(
     modifier: Modifier = Modifier,
     calendarState: CalendarState,
     events: List<UiEvent>,
-    eventInteractor: EventInteractor,
-    monthInteractor: MonthInteractor,
+    eventClicked: (Long) -> Unit,
+    monthClicked: (YearMonth) -> Unit,
     monthState: MonthState,
     daysOfWeek: List<DayOfWeek>,
     dotsColor: Color,
@@ -47,7 +46,7 @@ fun MonthPager(
             coroutineScope = coroutineScope,
             monthState = monthState,
             pagerState = pagerState,
-        ) { monthInteractor.monthChanged(it) }
+        ) { monthClicked(it) }
     }
 
     if (calendarState.modeState.isCalendarMonthMode()) {
@@ -61,7 +60,7 @@ fun MonthPager(
                 events = events,
                 daysOfWeek = daysOfWeek,
                 currentMonth = monthPagerState.getMonthForPage(it.toIndex()),
-                eventInteractor = eventInteractor,
+                eventClicked = eventClicked,
                 calendarState = calendarState,
                 dotsColor = dotsColor,
                 todayColor = todayColor,
@@ -77,7 +76,7 @@ fun MonthPager(
             events = events,
             daysOfWeek = daysOfWeek,
             currentMonth = calendarState.monthState.currentMonth,
-            eventInteractor = eventInteractor,
+            eventClicked = eventClicked,
             calendarState = calendarState,
             dotsColor = dotsColor,
             todayColor = todayColor,
@@ -94,7 +93,7 @@ fun MonthPager(
 fun MonthContent(
     modifier: Modifier = Modifier,
     calendarState: CalendarState,
-    eventInteractor: EventInteractor,
+    eventClicked: (Long) -> Unit,
     events: List<UiEvent>,
     daysOfWeek: List<DayOfWeek>,
     currentMonth: YearMonth,
@@ -123,7 +122,7 @@ fun MonthContent(
                     WeekContent(
                         week = it,
                         dayAspectRatio = aspectRatio,
-                        eventInteractor = eventInteractor,
+                        eventClicked = eventClicked,
                         calendarState = calendarState,
                         countEvents = countShownEvents,
                         dotsColor = dotsColor,
@@ -141,7 +140,7 @@ fun MonthContent(
                 WeekContent(
                     week = week,
                     dayAspectRatio = aspectRatio,
-                    eventInteractor = eventInteractor,
+                    eventClicked = eventClicked,
                     calendarState = calendarState,
                     countEvents = countShownEvents,
                     dotsColor = dotsColor,
