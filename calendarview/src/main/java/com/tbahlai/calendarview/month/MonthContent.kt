@@ -13,12 +13,14 @@ import com.google.accompanist.pager.rememberPagerState
 import com.tbahlai.calendarview.month.state.CalendarState
 import com.tbahlai.calendarview.month.state.MonthPagerState
 import com.tbahlai.calendarview.month.state.MonthState
+import com.tbahlai.calendarview.uimodels.CalendarMode
 import com.tbahlai.calendarview.uimodels.UiEvent
 import com.tbahlai.calendarview.utils.*
 import com.tbahlai.calendarview.week.WeekContent
 import com.tbahlai.calendarview.week.WeekHeaderView
 import com.tbahlai.calendarview.week.getWeeks
 import java.time.DayOfWeek
+import java.time.LocalDate
 import java.time.YearMonth
 
 @OptIn(ExperimentalPagerApi::class)
@@ -36,7 +38,8 @@ fun MonthPager(
     borderColor: Color,
     currentMonthDaysTextColor: Color,
     otherMonthDaysTextColor: Color,
-    dayOfWeekTextColor: Color
+    dayOfWeekTextColor: Color,
+    calendarModeChanged: (CalendarMode, LocalDate, LocalDate) -> Unit,
 ) {
     val pagerState = rememberPagerState(initialPage = START_INDEX)
     val coroutineScope = rememberCoroutineScope()
@@ -67,7 +70,8 @@ fun MonthPager(
                 borderColor = borderColor,
                 currentMonthDaysTextColor = currentMonthDaysTextColor,
                 otherMonthDaysTextColor = otherMonthDaysTextColor,
-                dayOfWeekTextColor = dayOfWeekTextColor
+                dayOfWeekTextColor = dayOfWeekTextColor,
+                calendarModeChanged = calendarModeChanged
             )
 
         }
@@ -83,7 +87,8 @@ fun MonthPager(
             borderColor = borderColor,
             currentMonthDaysTextColor = currentMonthDaysTextColor,
             otherMonthDaysTextColor = otherMonthDaysTextColor,
-            dayOfWeekTextColor = dayOfWeekTextColor
+            dayOfWeekTextColor = dayOfWeekTextColor,
+            calendarModeChanged = calendarModeChanged
         )
     }
 
@@ -94,6 +99,7 @@ fun MonthContent(
     modifier: Modifier = Modifier,
     calendarState: CalendarState,
     eventClicked: (Long) -> Unit,
+    calendarModeChanged: (CalendarMode, LocalDate, LocalDate) -> Unit,
     events: List<UiEvent>,
     daysOfWeek: List<DayOfWeek>,
     currentMonth: YearMonth,
@@ -129,7 +135,8 @@ fun MonthContent(
                         todayColor = todayColor,
                         borderColor = borderColor,
                         currentMonthDaysTextColor = currentMonthDaysTextColor,
-                        otherMonthDaysTextColor = otherMonthDaysTextColor
+                        otherMonthDaysTextColor = otherMonthDaysTextColor,
+                        calendarModeChanged = calendarModeChanged
                     )
                 }
             } else {
@@ -147,7 +154,8 @@ fun MonthContent(
                     todayColor = todayColor,
                     borderColor = borderColor,
                     currentMonthDaysTextColor = currentMonthDaysTextColor,
-                    otherMonthDaysTextColor = otherMonthDaysTextColor
+                    otherMonthDaysTextColor = otherMonthDaysTextColor,
+                    calendarModeChanged = calendarModeChanged
                 )
             }
         }

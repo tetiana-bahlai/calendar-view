@@ -18,6 +18,7 @@ import com.tbahlai.calendarview.uimodels.UiDay
 @Composable
 fun DayView(
     day: UiDay,
+    dayClicked: () -> Unit,
     dayHeight: Int,
     dayAspectRatio: Float,
     calendarModeState: CalendarInfoState,
@@ -47,6 +48,7 @@ fun DayView(
                         CalendarMode.WEEK_MODE -> CalendarMode.MONTH_MODE
                     }
                     calendarModeState.setCalendarInfo(newCalendarMode, day.weekCount)
+                    dayClicked()
                 },
             contentAlignment = Alignment.TopCenter
         ) {

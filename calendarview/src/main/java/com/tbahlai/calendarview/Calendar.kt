@@ -16,6 +16,7 @@ import com.tbahlai.calendarview.uimodels.CalendarMode
 import com.tbahlai.calendarview.uimodels.UiCalendarInfo
 import com.tbahlai.calendarview.uimodels.UiEvent
 import java.time.DayOfWeek
+import java.time.LocalDate
 import java.time.YearMonth
 import java.time.temporal.WeekFields
 import java.util.*
@@ -26,6 +27,7 @@ fun Calendar(
     calendarState: CalendarState = rememberCalendarState(),
     eventClicked: (Long) -> Unit,
     monthClicked: (YearMonth) -> Unit,
+    calendarModeChanged: (CalendarMode, LocalDate, LocalDate) -> Unit,
     yearsInterval: Pair<Long, Long> = Pair(1, 1),
     dots: Color = Color.Black,
     todayColor: Color = Color.LightGray,
@@ -64,7 +66,8 @@ fun Calendar(
             borderColor = borderColor,
             currentMonthDaysTextColor = currentMonthDaysTextColor,
             otherMonthDaysTextColor = otherMonthDaysTextColor,
-            dayOfWeekTextColor = dayOfWeekTextColor
+            dayOfWeekTextColor = dayOfWeekTextColor,
+            calendarModeChanged = calendarModeChanged
         )
     }
 }

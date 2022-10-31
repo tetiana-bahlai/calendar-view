@@ -15,9 +15,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tbahlai.calendarview.day.DayView
 import com.tbahlai.calendarview.month.state.CalendarState
+import com.tbahlai.calendarview.uimodels.CalendarMode
 import com.tbahlai.calendarview.uimodels.UiWeek
 import com.tbahlai.calendarview.utils.COUNT_DAYS_IN_WEEK
+import com.tbahlai.calendarview.utils.FIRST_DAY_OF_WEEK
 import com.tbahlai.calendarview.utils.getScreenWidthDp
+import java.time.LocalDate
 
 @Composable
 fun WeekContent(
@@ -26,6 +29,7 @@ fun WeekContent(
     dayAspectRatio: Float,
     countEvents: Int,
     eventClicked: (Long) -> Unit,
+    calendarModeChanged: (CalendarMode, LocalDate, LocalDate) -> Unit,
     week: UiWeek,
     dotsColor: Color,
     todayColor: Color,
@@ -50,7 +54,13 @@ fun WeekContent(
                         todayColor = todayColor,
                         borderColor = borderColor,
                         currentMonthDaysTextColor = currentMonthDaysTextColor,
-                        otherMonthDaysTextColor = otherMonthDaysTextColor
+                        otherMonthDaysTextColor = otherMonthDaysTextColor,
+                        dayClicked = {
+                            val currentMode = calendarState.modeState.getCalendarMode()
+                            val firstDate = week.days[FIRST_DAY_OF_WEEK].date
+                            val endDate = week.days[COUNT_DAYS_IN_WEEK - 1].date
+                            calendarModeChanged(currentMode, firstDate, endDate)
+                        },
                     )
                 }
             }
